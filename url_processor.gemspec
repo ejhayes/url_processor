@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "url_processor"
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eric Hayes"]
@@ -20,13 +20,15 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "lib/url_processor.rb",
     "spec/spec_helper.rb",
-    "spec/url_processor_spec.rb"
+    "spec/url_processor_spec.rb",
+    "url_processor.gemspec"
   ]
   s.homepage = "http://github.com/ejhayes/url_processor"
   s.licenses = ["MIT"]
