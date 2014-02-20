@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/url_processor.png)](http://badge.fury.io/rb/url_processor)
+{<img src="https://badge.fury.io/rb/url_processor.png" alt="Gem Version" />}[http://badge.fury.io/rb/url_processor]
 
 = url_processor
 
