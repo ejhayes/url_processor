@@ -1,4 +1,4 @@
-# url_processor [![Gem Version](https://badge.fury.io/rb/url_processor.png)](http://badge.fury.io/rb/url_processor) [![Code Climate](https://codeclimate.com/github/ejhayes/url_processor.png)](https://codeclimate.com/github/ejhayes/url_processor)
+# url_processor [![Build Status](https://travis-ci.org/ejhayes/url_processor.png?branch=master)](https://travis-ci.org/ejhayes/url_processor) [![Gem Version](https://badge.fury.io/rb/url_processor.png)](http://badge.fury.io/rb/url_processor) [![Code Climate](https://codeclimate.com/github/ejhayes/url_processor.png)](https://codeclimate.com/github/ejhayes/url_processor)
 
 Fast and easy way to validate tons of urls without locking up your system or eating up too much memory.
 
