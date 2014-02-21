@@ -1,10 +1,8 @@
-{<img src="https://badge.fury.io/rb/url_processor.png" alt="Gem Version" />}[http://badge.fury.io/rb/url_processor]
+# url_processor [![Gem Version](https://badge.fury.io/rb/url_processor.png)](http://badge.fury.io/rb/url_processor) [![Code Climate](https://codeclimate.com/github/ejhayes/url_processor.png)](https://codeclimate.com/github/ejhayes/url_processor)
 
-= url_processor
+Fast and easy way to validate tons of urls without locking up your system or eating up too much memory.
 
-Description goes here.
-
-== Contributing to url_processor
+## Contributing to url_processor
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
@@ -14,8 +12,7 @@ Description goes here.
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== Copyright
+## Copyright
 
-Copyright (c) 2014 Eric Hayes. See LICENSE.txt for
-further details.
+See LICENSE.txt for further details.
 
