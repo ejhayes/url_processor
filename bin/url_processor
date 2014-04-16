@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
 require 'url_processor'
+
+puts "THIS IS A TEST OF THE TOOL, version: #{UrlProcessor::VERSION}"
