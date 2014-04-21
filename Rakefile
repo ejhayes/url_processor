@@ -5,6 +5,8 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 task :test => :spec
+
+desc 'Interactive console with gem pre-loaded'
 task :console do
   require 'irb'
   require 'irb/completion'
