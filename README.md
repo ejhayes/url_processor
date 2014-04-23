@@ -1,10 +1,8 @@
-UrlProcessor Gem
-================
+# url_processor [![Build Status](https://travis-ci.org/ejhayes/url_processor.png?branch=master)](https://travis-ci.org/ejhayes/url_processor) [![Gem Version](https://badge.fury.io/rb/url_processor.png)](http://badge.fury.io/rb/url_processor) [![Code Climate](https://codeclimate.com/github/ejhayes/url_processor.png)](https://codeclimate.com/github/ejhayes/url_processor)
 
 Fast and easy way to process urls.
 
-Installation
-------------
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -18,8 +16,7 @@ Or install it yourself as:
 
     $ gem install url_processor
 
-Usage
------
+## Usage
 
 Example use case:
 
@@ -82,13 +79,11 @@ Example use case:
     puts "Running this thing..."
     link_check.run
 
-Updating this gem
------------------
+## Updating this gem
 
 If you are making changes to this gem, here's some stuff you will need to know:
 
-Running the executables
------------------------
+## Running the executables
 
 If you have an exetable file called "my_executable" in the bin folder, you can run it by doing:
 
@@ -104,8 +99,7 @@ To run the tests
 
 Please note that we are using simplecov for code coverage.
 
-Contributing
-------------
+## Contributing
 
 1. Fork it ( http://github.com/ejhayes/url_processor/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
