@@ -1,3 +1,9 @@
-language: ruby
+script: bundle exec rake
 rvm:
-  - 1.9.3
+- 1.9.3
+deploy:
+  provider: rubygems
+  api_key:
+    secure: lHnBn15z5MLSKiCqcqG0Bgj7r089C0uzI9zxzNtEGJ4fScIrRREJkYEb0l0ndCizek5++ChVOVM1/qguVEcFlGyUJ4DEXzWynRzsWui2sN+Xt9AaEUXGc23L/ljSg6oiH8G1TgIfeTODxn95WIUfFI6ydu5rZddsDeAWbXBxp4A=
+  on:
+    tags: true
