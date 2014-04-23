@@ -1,0 +1,12 @@
+Things to be done, eventually
+=============================
+
+- rdoc documentation in code
+- simplecov code coverage
+- rspec tests
+- integration with travisci
+- integration with code climate
+- published gem to rubygems
+- ppa setup for libcurl
+- post-install message to install correct libcurl message
+  in the event that asyncdns is not properly setup
