@@ -46,11 +46,7 @@ module UrlProcessor
     end
 
     def find_in_batches(collection, batch_size)
-      if collection.is_a? Array
-        collection.each do |element|
-          yield element
-        end
-      else
+      if collection.respond_to? :find_in_batches
         collection.find_in_batches(batch_size: batch_size) do |group|
           # Output progress information
           config.logger.info "PROCESSED: #{processed_links}, NEXT GROUP SIZE: #{group.size}".yellow
@@ -64,6 +60,10 @@ module UrlProcessor
           group.each do |element|
             yield element
           end
+        end
+      else
+        collection.each do |element|
+          yield element
         end
       end
     end
