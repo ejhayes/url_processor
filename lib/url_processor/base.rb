@@ -51,19 +51,23 @@ module UrlProcessor
           # Output progress information
           config.logger.info "PROCESSED: #{processed_links}, NEXT GROUP SIZE: #{group.size}".yellow
 
+          yield group
+
           # for debuggin purposes we do not want to process everything
           if config.debug && processed_links >= config.batch_size
             config.logger.debug "FINISHED first batch (#{@batch_size} records), exiting".yellow
             return
           end
 
-          group.each do |element|
-            yield element
-          end
         end
       else
+        elements = []
         collection.each do |element|
-          yield element
+          elements << element
+          if elements.size % batch_size == 0
+            yield elements
+            elements = elements.clear
+          end
         end
       end
     end
@@ -72,53 +76,56 @@ module UrlProcessor
       processed_links = 0
       hydra = Typhoeus::Hydra.new(max_concurrency: config.max_concurrency, max_total_connections: config.max_total_connections)
 
-      find_in_batches(config.links.call, config.batch_size) do |link|
-        # any custom pre-processing
-        pre_process_link(link)
+      find_in_batches(config.links.call, config.batch_size) do |group|
 
-        if link.urls.empty?
-          # In the event that we have a link that actually has no urls associated with it
-          report_broken_link link.id, :response_code => :has_no_urls if config.report_records_without_urls
-        else
-          # Each record has 2 urls associated with it, process each separately
-          link.urls.each do |url|
-            config.logger.debug "link: #{link.serializable_hash}, url: #{url}".yellow
+        group.each do |link|
+          # any custom pre-processing
+          pre_process_link(link)
 
-            link_request = config.new_link_request.call(
-              url[:url], 
-              followlocation: true, 
-              method: :head, 
-              ssl_verifypeer: false, 
-              ssl_verifyhost: 2, 
-              cookiefile: config.cookies_file, 
-              cookiejar: config.cookies_file, 
-              link_id: link.id,
-              url_type_code: url[:url_type_code],
-              timeout: config.max_timeout,
-              connecttimeout: config.max_timeout,
-              max_retries: config.max_retries,
-              forbid_reuse: 1,
-              nosignal: 1
-            )
+          if link.urls.empty?
+            # In the event that we have a link that actually has no urls associated with it
+            report_broken_link link.id, :response_code => :has_no_urls if config.report_records_without_urls
+          else
+            # Each record has 2 urls associated with it, process each separately
+            link.urls.each do |url|
+              config.logger.debug "link: #{link.serializable_hash}, url: #{url}".yellow
 
-            link_request.on_complete do |response|
-              processed_links += 1
+              link_request = config.new_link_request.call(
+                url[:url], 
+                followlocation: true, 
+                method: :head, 
+                ssl_verifypeer: false, 
+                ssl_verifyhost: 2, 
+                cookiefile: config.cookies_file, 
+                cookiejar: config.cookies_file, 
+                link_id: link.id,
+                url_type_code: url[:url_type_code],
+                timeout: config.max_timeout,
+                connecttimeout: config.max_timeout,
+                max_retries: config.max_retries,
+                forbid_reuse: 1,
+                nosignal: 1
+              )
 
-              if ([:operation_timedout, :couldnt_resolve_host].include? response.return_code) && response.request.retry_request?
-                config.logger.info "#{response.return_code} - #{response.effective_url} timed out, retrying".yellow
-                hydra.queue response.request
-              elsif response.return_code == :got_nothing && response.request.options[:method] != :get
-                config.logger.info "#{response.return_code} - #{response.effective_url} empty response, attempting GET request instead".yellow
-                
-                # set to GET request since HEAD may fail in some cases
-                response.request.options[:method] = :get
-                hydra.queue response.request
-              else
-                config.process_response.call response
+              link_request.on_complete do |response|
+                processed_links += 1
+
+                if ([:operation_timedout, :couldnt_resolve_host].include? response.return_code) && response.request.retry_request?
+                  config.logger.info "#{response.return_code} - #{response.effective_url} timed out, retrying".yellow
+                  hydra.queue response.request
+                elsif response.return_code == :got_nothing && response.request.options[:method] != :get
+                  config.logger.info "#{response.return_code} - #{response.effective_url} empty response, attempting GET request instead".yellow
+                  
+                  # set to GET request since HEAD may fail in some cases
+                  response.request.options[:method] = :get
+                  hydra.queue response.request
+                else
+                  config.process_response.call response
+                end
               end
-            end
 
-            hydra.queue link_request
+              hydra.queue link_request
+            end
           end
         end
 
