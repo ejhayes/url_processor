@@ -15,14 +15,14 @@ module UrlProcessor
     end
 
     def report_broken_link(link_id, params={})
-      url_type_code = params[:url_type_code]
+      link_data = params[:link_data]
       response_code = params[:response_code]
       begin
         link = config.get_link_by_id.call(link_id)
         broken_link = new_broken_link(
           :link_id => link.id, 
           :fips_code => link.fips_code, 
-          :url_type_code => url_type_code, 
+          :link_data => link_data, 
           :response_code => response_code,
           :reported_by => 'QC Report'
         )
@@ -99,7 +99,7 @@ module UrlProcessor
                 cookiefile: config.cookies_file, 
                 cookiejar: config.cookies_file, 
                 link_id: link.id,
-                url_type_code: url[:url_type_code],
+                link_data: url[:link_data],
                 timeout: config.max_timeout,
                 connecttimeout: config.max_timeout,
                 max_retries: config.max_retries,
