@@ -69,9 +69,9 @@ module UrlProcessor
             elements = elements.clear
           end
         end
-        # done iterating, return whatever else we have left
+        # done iterating, yield whatever else we have left, if we have stuff left
         if elements.size > 0
-          return elements
+          yield elements
         end
       end
     end
