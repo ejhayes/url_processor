@@ -1,4 +1,22 @@
 module UrlProcessor
+  class Cache
+    def initialize
+      @memory = {}
+    end
+
+    def get(request)
+      @memory[request]
+    end
+
+    def set(request, response)
+      @memory[request] = response
+    end
+
+    def empty!
+      @memory.clear
+    end
+  end
+
   class Base
     attr_reader :config
 
@@ -78,6 +96,11 @@ module UrlProcessor
 
     def run
       processed_links = 0
+      
+      # use an in-memory cache of responses (per run)
+      cache = Cache.new
+      Typhoeus::Config.cache = cache
+      
       hydra = Typhoeus::Hydra.new(max_concurrency: config.max_concurrency, max_total_connections: config.max_total_connections)
 
       find_in_batches(config.links.call, config.batch_size) do |group|
@@ -135,6 +158,8 @@ module UrlProcessor
 
         hydra.run
       end
+
+      cache.empty!
     end
   end
 end
